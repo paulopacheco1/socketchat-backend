@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SocketChat.Domain.Aggregates;
+using SocketChat.Domain.Entities;
+using SocketChat.Domain.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,12 +20,6 @@ namespace SocketChat.Infrastructure.Persistence.EFCore.Repositories
                 .Skip((filter.Page - 1) * filter.PageSize)
                 .Take(filter.PageSize)
                 .ToListAsync();
-        }
-
-        public override async Task<Usuario> GetAsync(int id)
-        {
-            return await GetEntities()
-                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<Usuario> GetByEmailAsync(string email)

@@ -8,12 +8,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace SocketChat.Domain.Aggregates
+namespace SocketChat.Domain.Entities
 {
     public class Usuario : Entity
     {
         public string Nome { get; set; }
         public string Email { get; private set; }
+        public List<Conversa> Conversas { get; private set; }
 
         private string Senha;
 

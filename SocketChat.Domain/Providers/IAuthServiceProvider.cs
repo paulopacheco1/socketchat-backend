@@ -1,4 +1,4 @@
-using SocketChat.Domain.Aggregates;
+using SocketChat.Domain.Entities;
 
 namespace SocketChat.Domain.Providers
 {

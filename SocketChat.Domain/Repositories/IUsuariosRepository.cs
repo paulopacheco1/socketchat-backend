@@ -1,11 +1,12 @@
-﻿using SocketChat.Domain.SeedWork;
+﻿using SocketChat.Domain.Entities;
+using SocketChat.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocketChat.Domain.Aggregates
+namespace SocketChat.Domain.Repositories
 {
     public interface IUsuariosRepository
     {

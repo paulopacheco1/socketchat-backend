@@ -16,6 +16,7 @@ using SocketChat.API.Middlewares;
 using SocketChat.API.SocketsManager;
 using SocketChat.Application.Commands;
 using SocketChat.Domain.Providers;
+using SocketChat.Domain.Repositories;
 using SocketChat.Domain.SeedWork;
 using SocketChat.Infrastructure.Auth;
 using SocketChat.Infrastructure.Persistence;

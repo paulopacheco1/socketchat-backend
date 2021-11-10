@@ -1,4 +1,4 @@
-using SocketChat.Domain.Aggregates;
+using SocketChat.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SocketChat.Domain.Aggregates;
+using SocketChat.Domain.Entities;
 using SocketChat.Domain.Providers;
 using System;
 using System.Collections.Generic;

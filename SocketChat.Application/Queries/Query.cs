@@ -1,7 +1,7 @@
-using SocketChat.Domain.SeedWork;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using SocketChat.Domain.Repositories;
 
 namespace SocketChat.Application.Queries
 {

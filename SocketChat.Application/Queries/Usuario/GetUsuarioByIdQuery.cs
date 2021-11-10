@@ -1,6 +1,6 @@
 using SocketChat.Application.Exceptions;
-using SocketChat.Domain.Aggregates;
-using SocketChat.Domain.SeedWork;
+using SocketChat.Domain.Entities;
+using SocketChat.Domain.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 

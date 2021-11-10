@@ -1,9 +1,9 @@
 using SocketChat.Application.Exceptions;
-using SocketChat.Domain.Aggregates;
-using SocketChat.Domain.SeedWork;
+using SocketChat.Domain.Entities;
 using FluentValidation;
 using System.Threading;
 using System.Threading.Tasks;
+using SocketChat.Domain.Repositories;
 
 namespace SocketChat.Application.Commands
 {
@@ -23,7 +23,7 @@ namespace SocketChat.Application.Commands
         public override async Task<int> Handle(CreateUsuarioCommand request, CancellationToken cancellationToken)
         {
             var emailJaCadastrado = await _unitOfWork.Usuarios.GetByEmailAsync(request.Email) != null;
-            if (emailJaCadastrado) throw new BadRequestException("E-mail já cadastrado no sistema.");
+            if (emailJaCadastrado) throw new BadRequestException("E-mail jï¿½ cadastrado no sistema.");
 
             var usuario = Usuario.Create(new CreateUsuarioDTO
             {
@@ -44,25 +44,25 @@ namespace SocketChat.Application.Commands
         {
             RuleFor(p => p.Nome)
                 .NotNull()
-                .WithMessage("Campo obrigatório")
+                .WithMessage("Campo obrigatï¿½rio")
                 .NotEmpty()
-                .WithMessage("Campo obrigatório");
+                .WithMessage("Campo obrigatï¿½rio");
 
             RuleFor(p => p.Email)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
-                .WithMessage("Campo obrigatório")
+                .WithMessage("Campo obrigatï¿½rio")
                 .NotEmpty()
-                .WithMessage("Campo obrigatório")
+                .WithMessage("Campo obrigatï¿½rio")
                 .EmailAddress()
-                .WithMessage("Email inválido");
+                .WithMessage("Email invï¿½lido");
 
             RuleFor(p => p.Senha)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
-                .WithMessage("Campo obrigatório")
+                .WithMessage("Campo obrigatï¿½rio")
                 .NotEmpty()
-                .WithMessage("Campo obrigatório")
+                .WithMessage("Campo obrigatï¿½rio")
                 .MinimumLength(6)
                 .WithMessage("A senha deve conter ao menos 6 caracteres");
         }

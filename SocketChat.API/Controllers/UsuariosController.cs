@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocketChat.Application.Commands;
 using SocketChat.Application.Queries;
-using SocketChat.Domain.Aggregates;
 using SocketChat.Domain.Providers;
+using SocketChat.Domain.Repositories;
 using System.Threading.Tasks;
 
 namespace SocketChat.API.Controllers

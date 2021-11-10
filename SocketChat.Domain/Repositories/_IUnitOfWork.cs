@@ -1,12 +1,12 @@
-using SocketChat.Domain.Aggregates;
 using System.Threading.Tasks;
 
-namespace SocketChat.Domain.SeedWork
+namespace SocketChat.Domain.Repositories
 {
     public interface IUnitOfWork
     {
         Task<int> CommitAsync();
 
         IUsuariosRepository Usuarios { get; }
+        IConversasRepository Conversas { get; }
     }
 }

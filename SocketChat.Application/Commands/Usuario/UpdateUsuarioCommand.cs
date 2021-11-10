@@ -1,9 +1,9 @@
 using SocketChat.Application.Exceptions;
-using SocketChat.Domain.Aggregates;
-using SocketChat.Domain.SeedWork;
+using SocketChat.Domain.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using SocketChat.Domain.Repositories;
 
 namespace SocketChat.Application.Commands
 {

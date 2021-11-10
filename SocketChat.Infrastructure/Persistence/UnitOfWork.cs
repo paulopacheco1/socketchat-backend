@@ -1,10 +1,10 @@
-using SocketChat.Domain.Aggregates;
 using SocketChat.Domain.SeedWork;
 using SocketChat.Infrastructure.Persistence.EFCore;
 using SocketChat.Infrastructure.Persistence.EFCore.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using SocketChat.Domain.Repositories;
 
 namespace SocketChat.Infrastructure.Persistence
 {
@@ -13,12 +13,16 @@ namespace SocketChat.Infrastructure.Persistence
         private readonly EFDataContext _context;
 
         public IUsuariosRepository Usuarios { get; }
+        public IConversasRepository Conversas { get; }
+        public IMensagensRepository Mensagens { get; }
 
         public UnitOfWork(EFDataContext context)
         {
             _context = context;
 
             Usuarios = new EFUsuariosRepository(_context);
+            Conversas = new EFConversasRepository(_context);
+            Mensagens = new EFMensagensRepository(_context);
         }
 
 
