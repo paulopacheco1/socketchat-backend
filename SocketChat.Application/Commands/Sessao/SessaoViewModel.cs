@@ -2,13 +2,20 @@ namespace SocketChat.Application.Commands
 {
     public class SessaoViewModel
     {
-        public string Email { get; private set; }
+        public SessaoUsuarioViewModel Usuario { get; private set; }
         public string Token { get; private set; }
 
-        public SessaoViewModel(string email, string token)
+        public SessaoViewModel(SessaoUsuarioViewModel usuario, string token)
         {
-            Email = email;
+            Usuario = usuario;
             Token = token;
         }
+    }
+
+    public class SessaoUsuarioViewModel
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Email { get; set; }
     }
 }

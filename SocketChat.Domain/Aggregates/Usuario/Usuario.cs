@@ -33,8 +33,9 @@ namespace SocketChat.Domain.Aggregates
 
         public static bool IsSenhaValida(string password)
         {
-            var regex = new Regex(@"^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$");
-            return regex.IsMatch(password);
+            return password.Length >= 6;
+            //var regex = new Regex(@"^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$");
+            //return regex.IsMatch(password);
         }
 
         public bool CheckPassword(string password) => PasswordHasher.ComputeSHA256Hash(password) == Senha;

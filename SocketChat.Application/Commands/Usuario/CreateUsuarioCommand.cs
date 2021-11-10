@@ -63,10 +63,8 @@ namespace SocketChat.Application.Commands
                 .WithMessage("Campo obrigatório")
                 .NotEmpty()
                 .WithMessage("Campo obrigatório")
-                .MinimumLength(8)
-                .WithMessage("A senha deve conter ao menos 8 caracteres")
-                .Must(Usuario.IsSenhaValida)
-                .WithMessage("A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial.");
+                .MinimumLength(6)
+                .WithMessage("A senha deve conter ao menos 6 caracteres");
         }
     }
 }

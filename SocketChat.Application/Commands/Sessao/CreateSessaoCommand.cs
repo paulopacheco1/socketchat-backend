@@ -27,7 +27,7 @@ namespace SocketChat.Application.Commands
             if (user == null || !user.CheckPassword(request.Senha)) throw new FalhaNoLoginException();
 
             var token = _authService.CriarTokenJwt(user);
-            return new SessaoViewModel(user.Email, token);
+            return new SessaoViewModel(new SessaoUsuarioViewModel() { Id = user.Id, Email = user.Email, Nome = user.Nome }, token);
         }
     }
 }

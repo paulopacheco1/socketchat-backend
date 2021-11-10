@@ -45,6 +45,18 @@ namespace SocketChat.API
             services.AddControllers(options => options.Filters.Add(typeof(ValidationFilter)))
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateUsuarioCommandValidator>());
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins(Configuration["CORS"].Split(","));
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                        builder.WithExposedHeaders("Content-Disposition");
+                    });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -111,9 +123,10 @@ namespace SocketChat.API
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
