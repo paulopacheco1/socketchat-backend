@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SocketChat.API.AccessContexts;
 using SocketChat.Domain.Providers;
 
 namespace SocketChat.API.Controllers
 {
     [Authorize]
-    public class HttpControllerBase : ControllerBase
+    public abstract class HttpControllerBase : ControllerBase
     {
         protected readonly IAccessContextProvider _accessContextProvider;
         protected readonly IMediator _mediator;

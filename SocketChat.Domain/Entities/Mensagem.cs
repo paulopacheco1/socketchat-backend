@@ -10,15 +10,17 @@ namespace SocketChat.Domain.Entities
     {
         public string Conteudo { get; private set; }
         public DateTime DataEnvio { get; private set; }
-        public Usuario Remetente { get; private set; }
+        public int IdConversa { get; private set; }
+        public int IdRemetente { get; private set; }
 
         public Mensagem() { }
 
-        public static Mensagem Create(Usuario remetente, string conteudo)
+        public static Mensagem Create(Conversa conversa, Usuario remetente, string conteudo)
         {
             return new Mensagem()
             {
-                Remetente = remetente,
+                IdConversa = conversa.Id,
+                IdRemetente = remetente.Id,
                 Conteudo = conteudo,
                 DataEnvio = DateTime.Now,
             };

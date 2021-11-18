@@ -10,8 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SocketChat.API.Filters;
-using SocketChat.API.Handlers;
-using SocketChat.API.HttpAccessContext;
+using SocketChat.API.SocketsHandlers;
+using SocketChat.API.AccessContexts;
 using SocketChat.API.Middlewares;
 using SocketChat.API.SocketsManager;
 using SocketChat.Application.Commands;
@@ -36,8 +36,6 @@ namespace SocketChat.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddWebSocketManager();
-
             var connectionString = Configuration.GetConnectionString("AppDB");
             services.AddDbContext<EFDataContext>(options => options.UseSqlServer(connectionString));
 
@@ -108,9 +106,11 @@ namespace SocketChat.API
               });
 
             services.AddHttpContextAccessor();
+            services.AddSingleton<IAuthServiceProvider, AuthService>();
             services.AddScoped<IAccessContextProvider, HttpAccessContextProvider>();
-            services.AddScoped<IAuthServiceProvider, AuthService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddWebSocketManager();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
@@ -138,7 +138,7 @@ namespace SocketChat.API
             });
 
             app.UseWebSockets();
-            app.MapSockets("/ws", serviceProvider.GetService<WebSocketMessageHandler>());
+            app.MapSockets("/chat", serviceProvider.GetService<ChatSocketHandler>());
         }
     }
 }

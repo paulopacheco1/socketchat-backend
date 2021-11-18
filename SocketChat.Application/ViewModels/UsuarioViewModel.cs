@@ -1,4 +1,4 @@
-namespace SocketChat.Application.Queries
+namespace SocketChat.Application.ViewModels
 {
     public class UsuarioViewModel
     {

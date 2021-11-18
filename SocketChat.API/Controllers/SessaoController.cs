@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SocketChat.API.AccessContexts;
 using SocketChat.Application.Commands;
 using SocketChat.Domain.Providers;
 using System.Threading.Tasks;

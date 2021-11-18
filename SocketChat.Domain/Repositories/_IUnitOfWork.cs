@@ -8,5 +8,6 @@ namespace SocketChat.Domain.Repositories
 
         IUsuariosRepository Usuarios { get; }
         IConversasRepository Conversas { get; }
+        IMensagensRepository Mensagens { get; }
     }
 }

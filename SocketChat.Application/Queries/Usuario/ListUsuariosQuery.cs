@@ -1,3 +1,4 @@
+using SocketChat.Application.ViewModels;
 using SocketChat.Domain.Repositories;
 using System.Collections.Generic;
 using System.Linq;

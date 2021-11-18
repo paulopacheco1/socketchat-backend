@@ -1,5 +1,7 @@
-﻿using SocketChat.API.SocketsManager;
+﻿using MediatR;
+using SocketChat.API.SocketsManager;
 using System;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -18,29 +20,36 @@ namespace SocketChat.API.SocketsManager
 
         public virtual async Task OnConnected(WebSocket socket)
         {
-            await Task.Run(() => { Connections.AddSocket(socket); });
+            await Task.Run(() => { Connections.AddConnection(socket); });
         }
 
         public virtual async Task OnDisconnected(WebSocket socket)
         {
-            await Connections.RemoveSocketAsync(Connections.GetId(socket));
+            await Connections.RemoveConnectionAsync(Connections.GetId(socket));
         }
 
         public async Task SendMessage(WebSocket socket, string message)
         {
-            if (socket.State != WebSocketState.Open) return;
+            if (socket == null || socket.State != WebSocketState.Open) return;
 
-            await socket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+            var msgBytes = Encoding.UTF8.GetBytes(message);
+            var msgArrSeg = new ArraySegment<byte>(msgBytes, 0, msgBytes.Length);
+            await socket.SendAsync(msgArrSeg, WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
         public async Task SendMessage(string id, string message)
         {
-            await SendMessage(Connections.GetSocketById(id), message);
+            await SendMessage(Connections.GetConnectionById(id), message);
+        }
+
+        public async Task SendMessage(int userId, string message)
+        {
+            await SendMessage(Connections.GetConnectionByUserId(userId), message);
         }
 
         public async Task SendMessageToAll(string message)
         {
-            foreach (var con in Connections.GetAllConnections()) await SendMessage(con.Value, message);
+            foreach (var con in Connections.GetAllConnections()) await SendMessage(con.Value.Socket, message);
         }
 
         public abstract Task Receive(WebSocket socket, WebSocketReceiveResult result, byte[] buffer);

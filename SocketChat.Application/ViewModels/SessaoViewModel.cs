@@ -1,4 +1,4 @@
-namespace SocketChat.Application.Commands
+namespace SocketChat.Application.ViewModels
 {
     public class SessaoViewModel
     {

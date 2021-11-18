@@ -10,8 +10,8 @@ using SocketChat.Infrastructure.Persistence.EFCore;
 namespace SocketChat.Infrastructure.Persistence.EFCore.Migrations
 {
     [DbContext(typeof(EFDataContext))]
-    [Migration("20211110184812_AddConversas")]
-    partial class AddConversas
+    [Migration("20211117214041_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,7 +54,7 @@ namespace SocketChat.Infrastructure.Persistence.EFCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Conversa");
+                    b.ToTable("Conversas");
                 });
 
             modelBuilder.Entity("SocketChat.Domain.Entities.Mensagem", b =>
@@ -67,16 +67,16 @@ namespace SocketChat.Infrastructure.Persistence.EFCore.Migrations
                     b.Property<string>("Conteudo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ConversaId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataEnvio")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RemetenteId")
+                    b.Property<int>("IdConversa")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdRemetente")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -84,11 +84,9 @@ namespace SocketChat.Infrastructure.Persistence.EFCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConversaId");
+                    b.HasIndex("IdConversa");
 
-                    b.HasIndex("RemetenteId");
-
-                    b.ToTable("Mensagem");
+                    b.ToTable("Mensagens");
                 });
 
             modelBuilder.Entity("SocketChat.Domain.Entities.Usuario", b =>
@@ -137,13 +135,9 @@ namespace SocketChat.Infrastructure.Persistence.EFCore.Migrations
                 {
                     b.HasOne("SocketChat.Domain.Entities.Conversa", null)
                         .WithMany("Mensagens")
-                        .HasForeignKey("ConversaId");
-
-                    b.HasOne("SocketChat.Domain.Entities.Usuario", "Remetente")
-                        .WithMany()
-                        .HasForeignKey("RemetenteId");
-
-                    b.Navigation("Remetente");
+                        .HasForeignKey("IdConversa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SocketChat.Domain.Entities.Conversa", b =>

@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SocketChat.API.AccessContexts;
 using SocketChat.Application.Commands;
 using SocketChat.Application.Queries;
 using SocketChat.Domain.Providers;
@@ -55,6 +56,16 @@ namespace SocketChat.API.Controllers
             var user = await _mediator.Send(query);
             return Ok(user);
         }
+
+        [HttpGet("conversas")]
+        public async Task<IActionResult> GetConversas()
+        {
+            var query = new ListConversasQuery();
+            query.idParticipante = Id();
+            var conversas = await _mediator.Send(query);
+            return Ok(conversas);
+        }
+
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateUsuarioCommand command)

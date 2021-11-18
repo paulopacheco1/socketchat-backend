@@ -41,5 +41,34 @@ namespace SocketChat.Infrastructure.Auth
 
             return tokenHandler.WriteToken(token);
         }
+
+        public ClaimsPrincipal ValidarTokenJwt(string token)
+        {
+            var accessSecret = Convert.FromBase64String(_jwtOptions.AccessSecret);
+            var accessKey = new SymmetricSecurityKey(accessSecret);
+            var credentials = new SigningCredentials(accessKey, SecurityAlgorithms.HmacSha256);
+
+            SecurityToken validatedToken;
+            var validator = new JwtSecurityTokenHandler();
+
+            TokenValidationParameters validationParameters = new TokenValidationParameters();
+            validationParameters.ValidIssuer = _jwtOptions.Issuer;
+            validationParameters.ValidAudience = _jwtOptions.Audience;
+            validationParameters.IssuerSigningKey = accessKey;
+            validationParameters.ValidateIssuerSigningKey = true;
+            validationParameters.ValidateAudience = true;
+
+            if (!validator.CanReadToken(token)) throw new Exception("Invalid token");
+
+            try
+            {
+                ClaimsPrincipal principal;
+                return principal = validator.ValidateToken(token, validationParameters, out validatedToken);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Invalid token");
+            }
+        }
     }
 }

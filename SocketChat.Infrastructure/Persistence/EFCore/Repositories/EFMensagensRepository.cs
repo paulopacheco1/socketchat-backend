@@ -12,14 +12,15 @@ namespace SocketChat.Infrastructure.Persistence.EFCore.Repositories
     {
         public EFMensagensRepository(EFDataContext context) : base(context) { }
 
-        public async Task<List<Mensagem>> ListAsync(MensagemFilter filter)
+        public async Task<List<Mensagem>> ListAsync(int idConversa, MensagemFilter filter)
         {
             return await GetEntities()
-                .Where(m => (filter.Remetente == null || m.Remetente.Id == filter.Remetente.Id))
+                .Where(m => (m.IdConversa == idConversa))
+                .Where(m => (filter.BeforeDate == null || m.DataEnvio < filter.BeforeDate))
                 .Where(m => (string.IsNullOrEmpty(filter.Conteudo) || m.Conteudo.ToLower().StartsWith(filter.Conteudo.ToLower())))
+                .OrderByDescending(m => m.DataEnvio)
                 .Skip((filter.Page - 1) * filter.PageSize)
                 .Take(filter.PageSize)
-                .OrderBy(m => m.DataEnvio)
                 .ToListAsync();
         }
     }

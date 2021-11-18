@@ -17,6 +17,7 @@ namespace SocketChat.Infrastructure.Persistence.EFCore.Repositories
             return await GetEntities()
                 .Where(u => (string.IsNullOrEmpty(filter.Email) || u.Email == filter.Email))
                 .Where(u => (string.IsNullOrEmpty(filter.Nome) || u.Nome.ToLower().StartsWith(filter.Nome.ToLower())))
+                .OrderBy(u => u.Nome)
                 .Skip((filter.Page - 1) * filter.PageSize)
                 .Take(filter.PageSize)
                 .ToListAsync();

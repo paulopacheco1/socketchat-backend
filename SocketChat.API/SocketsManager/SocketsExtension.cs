@@ -17,6 +17,7 @@ namespace SocketChat.API.SocketsManager
             foreach (var type in Assembly.GetEntryAssembly().ExportedTypes)
             {
                 if (type.GetTypeInfo().BaseType == typeof (SocketHandler)) services.AddSingleton(type);
+                if (type.GetTypeInfo().BaseType == typeof (SocketAction)) services.AddScoped(type);
             }
 
             return services;

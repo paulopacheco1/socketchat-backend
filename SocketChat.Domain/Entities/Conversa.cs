@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SocketChat.Domain.Exceptions;
 using SocketChat.Domain.SeedWork;
 
 namespace SocketChat.Domain.Entities
@@ -21,6 +22,16 @@ namespace SocketChat.Domain.Entities
                 Nome = nome,
                 Participantes = participantes,
             };
+        }
+
+        public string GetDisplayName(Usuario participante)
+        {
+            var participanteEstaNaConversa = Participantes.Any(p => p.Id == participante.Id);
+            if (!participanteEstaNaConversa) throw new AppException("Usuário não participa da conversa");
+
+            if (!String.IsNullOrWhiteSpace(Nome)) return Nome;
+
+            return string.Join(", ", Participantes.Where(p => p.Id != participante.Id).Select(p => p.Nome));
         }
     }
 }

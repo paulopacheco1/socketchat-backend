@@ -1,4 +1,5 @@
 using SocketChat.Application.Exceptions;
+using SocketChat.Application.ViewModels;
 using SocketChat.Domain.Entities;
 using SocketChat.Domain.Repositories;
 using System.Threading;

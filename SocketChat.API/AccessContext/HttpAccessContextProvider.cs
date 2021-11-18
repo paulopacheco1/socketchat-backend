@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SocketChat.Domain.Providers;
-using System;
-using System.Security.Claims;
 
-namespace SocketChat.API.HttpAccessContext
+namespace SocketChat.API.AccessContexts
 {
     public class HttpAccessContextProvider : IAccessContextProvider
     {
@@ -14,7 +12,7 @@ namespace SocketChat.API.HttpAccessContext
             _accessor = accessor;
         }
 
-        public AccessContext Get()
+        public Domain.Providers.AccessContext Get()
         {
             if (_accessor == null) return null;
             if (_accessor.HttpContext == null) return null;
@@ -24,29 +22,7 @@ namespace SocketChat.API.HttpAccessContext
             var currentUserId = _accessor.HttpContext.User.GetUserId();
             var currentUserEmail = _accessor.HttpContext.User.GetUserEmail();
 
-            return new AccessContext(currentUserId, currentUserEmail);
-        }
-    }
-
-    public static class ClaimsPrincipalExtensions
-    {
-        public static int GetUserId(this ClaimsPrincipal principal)
-        {
-            if (principal == null)
-                throw new ArgumentNullException(nameof(principal));
-
-            var stringId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            _ = int.TryParse(stringId, out var currentUserId);
-
-            return currentUserId;
-        }
-
-        public static string GetUserEmail(this ClaimsPrincipal principal)
-        {
-            if (principal == null)
-                throw new ArgumentNullException(nameof(principal));
-
-            return principal.FindFirst(ClaimTypes.Email)?.Value;
+            return new Domain.Providers.AccessContext(currentUserId, currentUserEmail);
         }
     }
 }

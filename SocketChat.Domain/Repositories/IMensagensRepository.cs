@@ -13,13 +13,13 @@ namespace SocketChat.Domain.Repositories
         Task AddAsync(Mensagem mensagem);
         void Update(Mensagem mensagem);
         void Remove(Mensagem mensagem);
-        Task<List<Mensagem>> ListAsync(MensagemFilter filter);
+        Task<List<Mensagem>> ListAsync(int idConversa, MensagemFilter filter);
         Task<Mensagem> GetAsync(int id);
     }
 
     public class MensagemFilter : Filter
     {
         public string Conteudo { get; set; }
-        public Usuario Remetente { get; set; }
+        public DateTime BeforeDate { get; set; }
     }
 }
