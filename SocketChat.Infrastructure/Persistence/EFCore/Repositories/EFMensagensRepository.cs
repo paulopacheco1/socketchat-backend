@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SocketChat.Domain.Entities;
 using SocketChat.Domain.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace SocketChat.Infrastructure.Persistence.EFCore.Repositories
         {
             return await GetEntities()
                 .Where(m => (m.IdConversa == idConversa))
-                .Where(m => (filter.BeforeDate == null || m.DataEnvio < filter.BeforeDate))
+                .Where(m => (filter.BeforeDate == default || m.DataEnvio < filter.BeforeDate))
                 .Where(m => (string.IsNullOrEmpty(filter.Conteudo) || m.Conteudo.ToLower().StartsWith(filter.Conteudo.ToLower())))
                 .OrderByDescending(m => m.DataEnvio)
                 .Skip((filter.Page - 1) * filter.PageSize)

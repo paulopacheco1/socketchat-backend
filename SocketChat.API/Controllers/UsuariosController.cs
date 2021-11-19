@@ -57,16 +57,6 @@ namespace SocketChat.API.Controllers
             return Ok(user);
         }
 
-        [HttpGet("conversas")]
-        public async Task<IActionResult> GetConversas()
-        {
-            var query = new ListConversasQuery();
-            query.idParticipante = Id();
-            var conversas = await _mediator.Send(query);
-            return Ok(conversas);
-        }
-
-
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateUsuarioCommand command)
         {

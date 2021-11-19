@@ -9,15 +9,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SocketChat.API.Filters;
-using SocketChat.API.SocketsHandlers;
 using SocketChat.API.AccessContexts;
+using SocketChat.API.Filters;
 using SocketChat.API.Middlewares;
+using SocketChat.API.SocketsHandlers;
 using SocketChat.API.SocketsManager;
 using SocketChat.Application.Commands;
 using SocketChat.Domain.Providers;
 using SocketChat.Domain.Repositories;
-using SocketChat.Domain.SeedWork;
 using SocketChat.Infrastructure.Auth;
 using SocketChat.Infrastructure.Persistence;
 using SocketChat.Infrastructure.Persistence.EFCore;
@@ -115,11 +114,17 @@ namespace SocketChat.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SocketChat.API v1");
+                c.RoutePrefix = String.Empty;
+            });
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SocketChat.API v1"));
             }
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
