@@ -44,7 +44,8 @@ namespace SocketChat.API.SocketsManager
 
         public async Task SendMessage(int userId, string message)
         {
-            await SendMessage(Connections.GetConnectionByUserId(userId), message);
+            var userConnections = Connections.GetUserConnections(userId);
+            foreach (var socket in userConnections) await SendMessage(socket, message);
         }
 
         public async Task SendMessageToAll(string message)

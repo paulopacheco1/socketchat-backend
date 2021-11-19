@@ -63,7 +63,6 @@ namespace SocketChat.Application.Commands
             {
                 Id = conversa.Id,
                 Mensagens = new List<Mensagem>() { mensagem },
-                Nome = conversa.GetDisplayName(remetente),
                 Participantes = conversa.Participantes.Select(p => new ConversaParticipanteViewModel()
                 {
                     Id = p.Id,

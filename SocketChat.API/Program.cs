@@ -15,7 +15,7 @@ namespace SocketChat.API
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true).Build();
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
             LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
 
             var logger = NLogBuilder.ConfigureNLog(LogManager.Configuration).GetCurrentClassLogger();

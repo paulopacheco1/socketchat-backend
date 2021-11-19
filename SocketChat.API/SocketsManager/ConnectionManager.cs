@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Threading;
@@ -25,12 +26,9 @@ namespace SocketChat.API.SocketsManager
             return _connections.FirstOrDefault(x => x.Key == id).Value.Socket;
         }
 
-        public WebSocket GetConnectionByUserId(int id)
+        public List<WebSocket> GetUserConnections(int idUser)
         {
-            var conn = _connections.FirstOrDefault(x => x.Value.AccessContext.UserId == id);
-            if (conn.Value == null) return null;
-
-            return conn.Value.Socket;
+            return _connections.Where(x => x.Value.AccessContext.UserId == idUser).Select(c => c.Value.Socket).ToList();
         }
 
         public ConcurrentDictionary<string, Connection> GetAllConnections()
